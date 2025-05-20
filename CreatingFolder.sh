@@ -8,9 +8,9 @@ do
 echo "[1] Create a folder"
 echo "[2] Create a file"
 echo "[3] List Folder and File"
-echo "[5] Delete a folder"
-echo "[6] Delete a file"
-echo "[7] Exit"
+echo "[4] Delete a folder"
+echo "[5] Delete a file"
+echo "[6] Exit"
 
 echo "Select an option:"
 read option
@@ -60,6 +60,14 @@ read option
 
         3)
                 ls -l
+        ;;
+
+        4)
+                echo "Enter the folder that want you to delete: " 
+                read deleteFolder
+
+                rmdir $deleteFolder
+                echo "Folder $deleteFolder has been sucessfully deleted"  
         ;;
     esac
 done
