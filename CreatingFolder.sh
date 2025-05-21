@@ -1,19 +1,21 @@
 #!/bin/sh
 #permission and cd  
 option=0
+non_existing_command
 
 while [ $option -ne 5 ]; 
 do 
 
+
 echo "[1] Create a folder"
 echo "[2] Create a file"
 echo "[3] List Folder and File"
-echo "[4] Delete a folder"
-echo "[5] Delete a file"
-echo "[6] Exit"
+echo "[4] Delete a folder or file"
+echo "[5] Exit"
 
 echo "Select an option:"
 read option
+
 
     case $option in
         1)
@@ -63,12 +65,33 @@ read option
         ;;
 
         4)
-                echo "Enter the folder that want you to delete: " 
+
+              echo "Enter the content (file or folder) you want to delete:"
+              read deleteContent
+
+            if [[ "$deleteContent" == "file" ]]; then 
+
+                echo "Enter file you want to delete : " 
+                read deleteFile 
+
+                rm $deleteFile
+                echo "File $deleteFile has been sucessfully deleted." 
+                
+            elif [[ "$deleteContent" == "folder" ]]; then
+
+                echo "Enter folder you want to delete : " 
                 read deleteFolder
 
                 rmdir $deleteFolder
-                echo "Folder $deleteFolder has been sucessfully deleted"  
+                echo "Folder $deleteFolder has been sucessfully deleted." 
+            
+            else 
+                echo "Invalid type: $deleteContent is not a valid option."
+
+            fi
+
         ;;
+        5) echo "Thank you!" ;;
+        *) echo "Invalid Input. Please try again." ;;
     esac
 done
-
