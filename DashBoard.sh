@@ -95,7 +95,7 @@ while [ $option -ne 6 ]; do
             fi
 
             ;;
-        6)  echo "Thank you!"
+        6)  echo "Thank your for choosing GMP Linux File Explorer "
             ;;
 
         *)
