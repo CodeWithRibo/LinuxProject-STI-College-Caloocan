@@ -24,12 +24,12 @@ while [ $option -ne 6 ]; do
             else
                 mkdir "$folderName"
                 echo "Folder $folderName has been created."
-                read -p "Do you want to set a permission for that folder? (Y/N): " permission
-                if [ "$permission" = "Y" ] || [ "$permission" = "y" ]; then
-                    read -p "Enter permission (ex: 700): " setPermission
-                    chmod "$setPermission" "$folderName"
-                    echo "Permission $setPermission has been set for folder $folderName"
-                fi
+                # read -p "Do you want to set a permission for that folder? (Y/N): " permission
+                # if [ "$permission" = "Y" ] || [ "$permission" = "y" ]; then
+                #     read -p "Enter permission (ex: 700): " setPermission
+                #     chmod "$setPermission" "$folderName"
+                #     echo "Permission $setPermission has been set for folder $folderName"
+                # fi
             fi
             ;;
         2)
@@ -39,25 +39,25 @@ while [ $option -ne 6 ]; do
             else
                 touch "$fileName"
                 echo "File $fileName has been created."
-                read -p "Do you want to set a permission for that file? (Y/N): " permission
-                if [ "$permission" = "Y" ] || [ "$permission" = "y" ]; then
-                    read -p "Enter permission (ex: 700): " setPermission
-                    chmod "$setPermission" "$fileName"
-                    echo "Permission $setPermission has been set for file $fileName"
-                fi
+                # read -p "Do you want to set a permission for that file? (Y/N): " permission
+                # if [ "$permission" = "Y" ] || [ "$permission" = "y" ]; then
+                #     read -p "Enter permission (ex: 700): " setPermission
+                #     chmod "$setPermission" "$fileName"
+                #     echo "Permission $setPermission has been set for file $fileName"
+                # fi
             fi
             ;;
         3)
-            list
+            list #Function
             echo "[1] Rename Files or Directories"
             echo "[2] Set Permission Files or Directories"
             read -p "Choose selection : " inputSelection
 
             case $inputSelection in
             1)
-                read -p "Input File or Directory name : " file_directory_name
+                read -p "Input File or Directory Name : " file_directory_name
 
-                if [ -f $file_directory_name ]; then
+                if [ -e $file_directory_name ]; then
                 read -p "Input New Name: " new_name
                 mv $file_directory_name $new_name
                 echo "You have sucessfully renamed $file_directory_name to $new_name"
@@ -65,6 +65,24 @@ while [ $option -ne 6 ]; do
                 echo "$file_directory_name does not exist"
                 fi
                 ;;
+            2) 
+                read -p "Enter the name of the file or directory for which you want to set permissions: " setUserPermission
+                if  [ ! -e $setUserPermission ]; then 
+                    echo "File does not exist"
+                    continue
+                fi
+
+                read -p "Enter permission (ex: 700): " setPermission                
+                if [ ! $setPermission -ge 778 ]; then 
+                chmod "$setPermission" "$setUserPermission"
+                sleep 1
+                listText #Function
+                else 
+                    echo "set permission denied"
+                fi
+                ;;
+            *) 
+                echo "Invalid Input. Please try again.";;
             esac
             ;;
         4)
@@ -78,7 +96,7 @@ while [ $option -ne 6 ]; do
                 #Function
                 listDirectiories #Function
                 read -p "Enter folder you want to delete: " deleteFolder
-                rmdir "$deleteFolder"
+                rm -rf "$deleteFolder"
                 echo "Folder $deleteFolder has been successfully deleted."
             else
                 echo "Invalid type: $deleteContent is not a valid option."
@@ -88,8 +106,8 @@ while [ $option -ne 6 ]; do
             listFiles #Function
             read -p "Enter file you want to take a note: " inputUser
 
-            if [ -f "$inputUser" ]; then
-            takeNotes
+            if [ -f $inputUser ]; then
+            takeNotes #Function
             else
             echo "$inputUser is not in the file selection "
             fi
