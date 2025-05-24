@@ -1,6 +1,7 @@
 #!/bin/sh
    source Components/ListDirectories.sh
    source Components/WelcomeView.sh
+   source Components/Validation.sh
 
    welcomeView #Function
 
@@ -19,12 +20,10 @@ while [ $option -ne 7 ]; do
 
     case $option in
         1)
-            read -p "Enter folder name: " folderName
-            [ ! -d $folderName ] && echo "$(mkdir $folderName)Folder $folderName has been created " || echo "Folder already exists"  
+            validateFolder
             ;;
         2)
-            read -p "Enter file name: " fileName
-            [ ! -f $fileName ] && echo "$(touch $fileName)File $fileName has been created. " || echo "File already exists" 
+            validateFiles
             ;;
         3)
             list #Function
@@ -41,22 +40,10 @@ while [ $option -ne 7 ]; do
             #Nested Switch Case
             case $inputSelection in
             1)
-                read -p "Enter File or Directory Name : " file_directory_name
-
-                if [ -e $file_directory_name ]; then
-                read -p "Enter New Name: " new_name
-                mv $file_directory_name $new_name
-                echo "You have sucessfully renamed $file_directory_name to $new_name"
-                else
-                echo "$file_directory_name does not exist"
-                fi
+                validateRename
                 ;;
             2)
-                read -p "Enter the File or Directory you want to move: " moveFilesAndDirectories
-                if [ -e "$moveFilesAndDirectories" ]; then
-                    read -p "Enter the Destination path : " destination
-                    [ -e $destination ] && mv "$moveFilesAndDirectories" "$destination" || echo "Destination path does not exist"
-                fi
+               validateMove
                 ;;
             3) 
                 read -p "Enter the name of the File or Directory for which you want to set permissions: " setUserPermission
@@ -109,7 +96,7 @@ while [ $option -ne 7 ]; do
             [ -f $inputUser ]  && takeNotes || echo "$inputUser is not in the file selection "
             ;;
         6)
-            
+            clear
             inputSelection=0 
 
             until [ $inputSelection -eq 4 ]; do            
