@@ -109,12 +109,36 @@ while [ $option -ne 7 ]; do
             [ -f $inputUser ]  && takeNotes || echo "$inputUser is not in the file selection "
             ;;
         6)
-            list
-            read -p "Enter File or Directory Name : " file_directory_name
-            read -p "Enter password : " password
             
-            # zip -r --password "$password" "${file_directory_name}.zip" "$file_directory_name"
-            7z a -p"$password" -mhe=on "${file_directory_name}".7z "$file_directory_name"
+            inputSelection=0 
+
+            until [ $inputSelection -eq 4 ]; do            
+            echo "[1] Encrypt the File or Folder"
+            echo "[2] Decrypted the File or Folder"
+            echo "[3] Back to the DashBoard"            
+            read -p "Choose selection : " inputSelection
+
+            #Nested Switch Case
+            case $inputSelection in
+            1)
+            list #Function
+            read -p "Enter File or Directory Name : " file_directory_name
+            read -p "Enter Passwword to encrypt : " -password
+            openssl enc -aes-256-cbc -salt -in "${file_directory_name}.zip" -out "${file_directory_name}.enc" -k "$password"
+            # rm "${file_directory_name}.zip"
+
+            ;;
+            2)
+            list #Function
+            read -p "Enter File or Directory Name : " file_directory_name
+            read -p "Enter password to decrypt: " password
+            openssl enc -aes-256-cbc -d -in "${file_directory_name}.enc" -out "${file_directory_name}.zip" -k "$password"
+            unzip "${file_directory_name}.zip"
+
+            ;;
+            3) clear; welcomeView;  break;;
+            esac
+            done
             ;;
         7)  echo "Thank your for choosing GMP Linux File Explorer "
             ;;
