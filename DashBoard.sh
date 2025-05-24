@@ -6,7 +6,7 @@
 
 option=0
 
-while [ $option -ne 6 ]; do
+while [ $option -ne 7 ]; do
     echo "[1] Create a folder"
     echo "[2] Create a file"
     echo "[3] List Folder and File"
@@ -71,25 +71,34 @@ while [ $option -ne 6 ]; do
                     echo "set permission denied"
                 fi
                 ;;
-            4) continue ;;
+            4) clear; welcomeView; continue  ;;
             * ) 
                 echo "Invalid Input. Please try again.";;
             esac
             done
             ;;
         4)
-            read -p "Enter the content (file or folder) you want to delete: " deleteContent
-            if [ "$deleteContent" = "file" ]; then
-                listFiles #Function
-                read -p "Enter file you want to delete: " deleteFile
-                rm "$deleteFile"
-                echo "File $deleteFile has been successfully deleted."
-            elif [ "$deleteContent" = "folder" ]; then
-                #Function
-                listDirectiories #Function
+            clear
+            echo "[1] File"
+            echo "[2] Folder"
+            echo "[3] Zip File"
+            read -p "Type the content you want to delete: " deleteContent
+            
+            if [ "$deleteContent" -eq 1 ]; then
+                listFiles
+                # read -p  "Enter file you want to delete: " deleteFile 
+                # [ ! -e $deleteFile ]  && echo "file does not exist" ||
+                # echo "File $deleteFile has been successfully deleted. $(rm $deleteFile)"
+            elif [ "$deleteContent" -eq 2 ]; then
+                listDirectiories #Function  
                 read -p "Enter folder you want to delete: " deleteFolder
                 rm -rf "$deleteFolder"
                 echo "Folder $deleteFolder has been successfully deleted."
+            elif [ "$deleteContent" -eq 3 ]; then
+                listZipFile #Function
+                read -p "Enter folder you want to delete: " deleteZipFile                
+                rm -rf "$deleteZipFile"
+                echo "Zip File $deleteZipFile has been successfully deleted."
             else
                 echo "Invalid type: $deleteContent is not a valid option."
             fi
@@ -100,9 +109,13 @@ while [ $option -ne 6 ]; do
             [ -f $inputUser ]  && takeNotes || echo "$inputUser is not in the file selection "
             ;;
         6)
-          list
-                     
-        ;;
+            list
+            read -p "Enter File or Directory Name : " file_directory_name
+            read -p "Enter password : " password
+            
+            # zip -r --password "$password" "${file_directory_name}.zip" "$file_directory_name"
+            7z a -p"$password" -mhe=on "${file_directory_name}".7z "$file_directory_name"
+            ;;
         7)  echo "Thank your for choosing GMP Linux File Explorer "
             ;;
 
