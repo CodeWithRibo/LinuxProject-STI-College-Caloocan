@@ -24,7 +24,7 @@ listFiles () {
     echo "------------------------------------------------------------"
     echo "Here is the detailed information about txt files"
     echo "------------------------------------------------------------"
-    ls *.txt 2>/dev/null | grep -q .  && ls *.txt || echo "No txt file found"
+    ls -l *.txt 2>/dev/null | grep -q .  && ls -l *.txt || echo "No txt file found"
      echo "------------------------------------------------------------"
 }
 
@@ -61,7 +61,8 @@ listText() {
     echo "------------------------------------------------------------"
     echo "You have successfully set the permission to: $setPermission for $setUserPermission"
     echo "------------------------------------------------------------"
-     ls *.txt 2>/dev/null | grep -q .  && ls *.txt || echo "No txt file found" 
+     ls -l *.txt 2>/dev/null | grep -q .  && ls -l *.txt || echo "No txt file found" 
     echo "------------------------------------------------------------"
-     ls -ld */ 2>/dev/null | grep -q .  && ls -ld */ || echo "No txt file found" 
+     ls -ld */ 2>/dev/null | grep -q .  && ls -ld */ || echo "No directory found" 
+    echo "------------------------------------------------------------"
 }   

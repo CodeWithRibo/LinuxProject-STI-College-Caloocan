@@ -1,5 +1,5 @@
 #!/bin/sh
-
+source Components/ListDirectories.sh
 error="Error: Invalid input. Please try again"
             
 validateFolder () 
@@ -64,5 +64,21 @@ validateMove ()
 #Validate Permission
 validateSetPermission ()
 {
-    
+    while true; do
+        read -p "Enter the name of the File or Directory for which you want to set permissions: "   setUserPermission
+        [ -n "$setUserPermission" ] && break || echo $error
+    done
+
+        if [ -e $setUserPermission ]; then
+        read -p "Enter permission (ex: 700): " setPermission
+            if [ ! $setPermission -ge 778 ]; then
+                chmod "$setPermission" "$setUserPermission"
+                sleep 1
+                listText #Function
+            else 
+                echo "set permission denied"
+            fi
+        else 
+        echo "File or Directory does not exist"
+        fi
 }

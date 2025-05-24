@@ -40,23 +40,13 @@ while [ $option -ne 7 ]; do
             #Nested Switch Case
             case $inputSelection in
             1)
-                validateRename
+            validateRename
                 ;;
             2)
-               validateMove
+            validateMove
                 ;;
             3) 
-                read -p "Enter the name of the File or Directory for which you want to set permissions: " setUserPermission
-                [ ! -e "$setUserPermission" ] && { echo "File or Directory does not exist"; continue; }
-
-                read -p "Enter permission (ex: 700): " setPermission                
-                if [ ! $setPermission -ge 778 ]; then 
-                chmod "$setPermission" "$setUserPermission"
-                sleep 1
-                listText #Function
-                else 
-                    echo "set permission denied"
-                fi
+            validateSetPermission
                 ;;
             4) clear; welcomeView; continue  ;;
             * ) 
