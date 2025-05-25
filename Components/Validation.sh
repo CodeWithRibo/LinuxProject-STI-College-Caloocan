@@ -76,7 +76,7 @@ validateSetPermission ()
             if [ ! "$setPermission" -ge 778 ]; then
                 chmod "$setPermission" "$setUserPermission"
                 sleep 1
-                listText #Function
+                listText 
             else 
                 echo "Set permission denied"
             fi
@@ -97,15 +97,45 @@ delete ()
 
         case $option in
         1)
-            listFiles
-            read -p "Enter File you want to delete: " deleteFile
+            listFiles 
+            if [ "$(ls *.txt)" ]; then
+                read -p "Enter File you want to delete: " deleteFile
+                if [ -f "$deleteFile" ]; then
+                    { rm $deleteFile; echo "File $deleteFile has been successfully deleted."; }
+                else
+                   echo "File does not exist"
+                fi
+                else 
+                errorMessageFile    
+             fi
 
-            [ -f "$deleteFile" ] &&  { rm $deleteFile; echo "File $deleteFile has been successfully deleted."; } ||
-            echo "File doest not exist"
         ;;
         2)
+            listDirectiories
+             if [ "$(ls -A)" ]; then
+                read -p "Enter folder you want to delete: " deleteFolder
+                if [ -d "$deleteFolder" ]; then
+                    { rm -rf $deleteFolder; echo "Folder $deleteFolder has been successfully deleted."; }
+                else
+                   echo "Folder does not exist"
+                fi
+                else 
+                errorMessageFolder    
+             fi
+
         ;;
         3)
+            listZipFile
+             if [ "$(ls *.zip)" ]; then
+                read -p "Enter zip file you want to delete: " deleteZipFile
+                if [ -f "$deleteZipFile" ]; then
+                    { rm -rf $deleteZipFile; echo "Zip file $deleteZipFile has been successfully deleted."; }
+                else
+                   echo "Zip file does not exist"
+                fi
+                else 
+                errorMessageZipFile  
+             fi
         ;;
         4)
             read -p "Are you sure want to delete the system? [Y]/[N]" : deleteSystem
@@ -118,4 +148,44 @@ delete ()
         esac
 
     done
+}
+
+#Take notes
+validateTakeNotes () 
+{
+    listFiles 
+    if [ "$(ls *.txt)" ]; then
+        read -p "Enter file you want to take a note: " inputUser
+        if [ -f $inputUser ]; then
+            takeNotes
+            else
+            echo "$inputUser is not in the list file "
+        fi
+        else
+        errorMessageFile
+    fi
+}
+
+encrypt ()
+{
+        listFiles
+        read -p "Enter the file name : " file_encrypt
+        read -p "Enter Passwword to encrypt : " password
+        openssl enc -aes-256-cbc -salt -pbkdf2 -iter 100000 -in "$file_encrypt" -out "${file_encrypt}.enc" -k "$password"
+        rm -rf "$file_encrypt"
+}
+
+decrypt ()
+{
+        listDecryption
+        read -p "Enter the file name : " file_decrypt
+        read -p "Enter password to decrypt: " password
+        openssl enc -aes-256-cbc -d -salt -pbkdf2 -iter 100000 -in "$file_decrypt" -out "${file_decrypt%.enc}" -k "$password" 2>/dev/null
+
+        if [ $? -eq 0 ]; then
+            rm -rf $file_decrypt
+            else 
+            rm -rf "${file_decrypt%.enc}"
+            echo "wrong password"
+            fi
 }

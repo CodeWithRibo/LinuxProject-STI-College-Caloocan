@@ -57,9 +57,7 @@ while [ $option -ne 7 ]; do
             delete
             ;;
         5)
-            listFiles #Function
-            read -p "Enter file you want to take a note: " inputUser
-            [ -f $inputUser ]  && takeNotes || echo "$inputUser is not in the file selection "
+            validateTakeNotes
             ;;
         6)
             clear
@@ -74,20 +72,10 @@ while [ $option -ne 7 ]; do
             #Nested Switch Case
             case $inputSelection in
             1)
-            list #Function
-            read -p "Enter File or Directory Name : " file_directory_name
-            read -p "Enter Passwword to encrypt : " -password
-            openssl enc -aes-256-cbc -salt -in "${file_directory_name}.zip" -out "${file_directory_name}.enc" -k "$password"
-            # rm "${file_directory_name}.zip"
-
+                encrypt
             ;;
             2)
-            list #Function
-            read -p "Enter File or Directory Name : " file_directory_name
-            read -p "Enter password to decrypt: " password
-            openssl enc -aes-256-cbc -d -in "${file_directory_name}.enc" -out "${file_directory_name}.zip" -k "$password"
-            unzip "${file_directory_name}.zip"
-
+                decrypt
             ;;
             3) clear; welcomeView;  break;;
             esac

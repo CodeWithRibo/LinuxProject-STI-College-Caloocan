@@ -14,7 +14,7 @@ listZipFile () {
     echo "------------------------------------------------------------"
     echo "Here is the detailed information about directories"
     echo "------------------------------------------------------------"
-    ls *.zip
+    ls -l *.zip 2>/dev/null | grep -q .  && ls -l *.zip || echo "No zip file found"
     echo "------------------------------------------------------------"
 }
 
@@ -24,10 +24,29 @@ listFiles () {
     echo "------------------------------------------------------------"
     echo "Here is the detailed information about txt files"
     echo "------------------------------------------------------------"
-    ls -l *.txt 2>/dev/null | grep -q .  && ls -l *.txt || echo "No txt file found"
+    if find . -type f -name "*.txt" 2>/dev/null | grep -q .; then
+        find . -type f -name "*.txt" -exec ls -l {} +
+    else
+        echo "No txt file found"
+    fi
      echo "------------------------------------------------------------"
 }
 
+#Decryption
+listDecryption ()
+{
+    clear
+    echo "------------------------------------------------------------"
+    echo "Here is the detailed information about txt files"
+    echo "------------------------------------------------------------"
+    if find . -type f -name "*.enc" 2>/dev/null | grep -q .; then
+        find . -type f -name "*.enc" -exec ls -l {} +
+    else
+        echo "No txt file found"
+    fi
+     echo "------------------------------------------------------------"
+
+}
 
 takeNotes () { 
     clear
@@ -65,4 +84,23 @@ listText() {
     echo "------------------------------------------------------------"
      ls -ld */ 2>/dev/null | grep -q .  && ls -ld */ || echo "No directory found" 
     echo "------------------------------------------------------------"
-}   
+}
+errorMessageFile () {
+    clear
+    echo "------------------------------------------------------------"
+    echo "Error 404: No File found"    
+    echo "------------------------------------------------------------"
+}
+errorMessageFolder () {
+    clear
+    echo "------------------------------------------------------------"
+    echo "Error 404: No Folder found"    
+    echo "------------------------------------------------------------"
+}
+errorMessageZipFile () {
+    clear
+    echo "------------------------------------------------------------"
+    echo "Error 404: No zip file found"    
+    echo "------------------------------------------------------------"
+}
+
