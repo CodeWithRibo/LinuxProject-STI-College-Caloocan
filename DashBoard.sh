@@ -10,7 +10,7 @@ while [ $option -ne 7 ]; do
     echo "[1] Create a folder"
     echo "[2] Create a file"
     echo "[3] List Folder and File"
-    echo "[4] Delete a folder or file"
+    echo "[4] Delete"
     echo "[5] Take notes"
     echo "[6] Set Password the File or Folder"
     echo "[7] Exit"
