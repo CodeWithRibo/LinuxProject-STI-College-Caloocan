@@ -1,5 +1,7 @@
 #!/bin/sh
 source Components/ListDirectories.sh
+source Dashboard.sh
+
 error="Error: Invalid input. Please try again"
             
 validateFolder () 
@@ -8,7 +10,7 @@ validateFolder ()
         read -p "Enter folder name: " folderName
         [ -n "$folderName" ] && break || echo "$error"
     done
-    [ ! -d $folderName ] && echo "$(mkdir $folderName)Folder $folderName has been created " || echo "Folder already exists"  
+    [ ! -d "$folderName" ] && echo "$(mkdir $folderName)Folder $folderName has been created " || echo "Folder already exists"  
 }
 
 validateFiles () 
@@ -35,12 +37,12 @@ validateRename ()
         read -p "Enter File or Directory Name : " file_directory_name
         [ -n "$file_directory_name" ] && break || echo "$error"
     done
-        if [ -e $file_directory_name ]; then
+        if [ -e "$file_directory_name" ]; then
             read -p "Enter New Name: " new_name
             if find /home/adminriboluna/LinuxProject-STI-College-Caloocan -name "$new_name" 2>/dev/null | grep -q .; then
             echo "The $new_name is already exist in another directory"            
             else  
-            mv $file_directory_name $new_name
+            mv "$file_directory_name" "$new_name"
             echo "You have sucessfully renamed $file_directory_name to $new_name"
             fi
         else
@@ -56,7 +58,7 @@ validateMove ()
     done
         if [ -e "$moveFilesAndDirectories" ]; then
             read -p "Enter the Destination path : " destination
-            [ -e $destination ] && mv "$moveFilesAndDirectories" "$destination" echo "sucessfully move the $moveFilesAndDirectories to $destination" || echo "Destination path does not exist"
+            [ -e "$destination" ] && mv "$moveFilesAndDirectories" "$destination" echo "sucessfully move the $moveFilesAndDirectories to $destination" || echo "Destination path does not exist"
         else 
             echo "$moveFilesAndDirectories not exist" 
         fi
@@ -69,16 +71,43 @@ validateSetPermission ()
         [ -n "$setUserPermission" ] && break || echo $error
     done
 
-        if [ -e $setUserPermission ]; then
+        if [ -e "$setUserPermission" ]; then
         read -p "Enter permission (ex: 700): " setPermission
-            if [ ! $setPermission -ge 778 ]; then
+            if [ ! "$setPermission" -ge 778 ]; then
                 chmod "$setPermission" "$setUserPermission"
                 sleep 1
                 listText #Function
             else 
-                echo "set permission denied"
+                echo "Set permission denied"
             fi
         else 
-        echo "File or Directory does not exist"
+        echo "directory does not exist"
         fi
+}
+#Delete Content
+delete () 
+{    
+    until [ $option -eq 3 ]; do
+        echo "[1] File"
+        echo "[2] Folder"
+        echo "[3] Zip File"
+        echo "[4] Delete System"
+        echo "[5] Back to Dashboard"
+        read -p "Select the content you want to delete : " option
+
+        case $option in
+        1)
+            listFiles
+            read -p "Enter File you want to delete: " deleteFile
+
+            [ -f "$deleteFile" ] &&  { rm $deleteFile; echo "File $deleteFile has been successfully deleted."; } ||
+            echo "File doest not exist"
+        ;;
+        2)
+        ;;
+        3)
+        ;;
+        esac
+
+    done
 }

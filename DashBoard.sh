@@ -6,7 +6,6 @@
    welcomeView #Function
 
 option=0
-
 while [ $option -ne 7 ]; do
     echo "[1] Create a folder"
     echo "[2] Create a file"
@@ -55,30 +54,7 @@ while [ $option -ne 7 ]; do
             done
             ;;
         4)
-            clear
-            echo "[1] File"
-            echo "[2] Folder"
-            echo "[3] Zip File"
-            read -p "Type the content you want to delete: " deleteContent
-            
-            if [ "$deleteContent" -eq 1 ]; then
-                listFiles
-                # read -p  "Enter file you want to delete: " deleteFile 
-                # [ ! -e $deleteFile ]  && echo "file does not exist" ||
-                # echo "File $deleteFile has been successfully deleted. $(rm $deleteFile)"
-            elif [ "$deleteContent" -eq 2 ]; then
-                listDirectiories #Function  
-                read -p "Enter folder you want to delete: " deleteFolder
-                rm -rf "$deleteFolder"
-                echo "Folder $deleteFolder has been successfully deleted."
-            elif [ "$deleteContent" -eq 3 ]; then
-                listZipFile #Function
-                read -p "Enter folder you want to delete: " deleteZipFile                
-                rm -rf "$deleteZipFile"
-                echo "Zip File $deleteZipFile has been successfully deleted."
-            else
-                echo "Invalid type: $deleteContent is not a valid option."
-            fi
+            delete
             ;;
         5)
             listFiles #Function
@@ -125,3 +101,4 @@ while [ $option -ne 7 ]; do
             ;;
     esac
 done
+
