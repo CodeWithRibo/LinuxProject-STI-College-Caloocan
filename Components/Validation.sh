@@ -138,10 +138,9 @@ delete ()
              fi
         ;;
         4)
-            read -p "Are you sure want to delete the system? [Y]/[N]" : deleteSystem
-
+            read -p "Are you sure want to delete the system? [Y]/[N] :" deleteSystem
             if [ "$deleteSystem" == "Y" ]; then
-                rm -f home/adminriboluna/LinuxProject-STI-College-Caloocan/* 
+                rm -rf /home/adminriboluna/LinuxProject-STI-College-Caloocan/* 
                 echo "Delete Successfully"
             fi
         ;;
