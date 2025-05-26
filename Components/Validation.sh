@@ -171,7 +171,9 @@ encrypt ()
         read -p "Enter the file name : " file_encrypt
         read -p "Enter Passwword to encrypt : " password
         openssl enc -aes-256-cbc -salt -pbkdf2 -iter 100000 -in "$file_encrypt" -out "${file_encrypt}.enc" -k "$password"
-        rm -rf "$file_encrypt"
+        if [ "$password" ]; then
+            echo "Your "$file_encrypt" has been successfully encrypted";
+        fi
 }
 
 decrypt ()
@@ -183,8 +185,9 @@ decrypt ()
 
         if [ $? -eq 0 ]; then
             rm -rf $file_decrypt
+            echo "Your "$file_decrypt" has been successfully decrypted";
             else 
             rm -rf "${file_decrypt%.enc}"
-            echo "wrong password"
+            echo "Wrong password"
             fi
 }
