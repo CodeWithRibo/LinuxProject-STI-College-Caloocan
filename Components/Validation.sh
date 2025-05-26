@@ -58,7 +58,12 @@ validateMove ()
     done
         if [ -e "$moveFilesAndDirectories" ]; then
             read -p "Enter the Destination path : " destination
-            [ -e "$destination" ] && mv "$moveFilesAndDirectories" "$destination" echo "sucessfully move the $moveFilesAndDirectories to $destination" || echo "Destination path does not exist"
+            if [ -e "$destination" ]; then
+            mv "$moveFilesAndDirectories" "$destination"
+            echo "sucessfully move the $moveFilesAndDirectories to $destination"
+            else
+            echo "Destination path does not exist"
+            fi
         else 
             echo "$moveFilesAndDirectories not exist" 
         fi
