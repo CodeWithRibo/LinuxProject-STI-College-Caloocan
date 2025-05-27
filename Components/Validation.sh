@@ -149,6 +149,7 @@ delete ()
                 echo "Delete Successfully"
             fi
         ;;
+        5) clear; welcomeView; break;;
         esac
 
     done
