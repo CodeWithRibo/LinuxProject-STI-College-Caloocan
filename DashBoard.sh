@@ -12,7 +12,7 @@ while [ $option -ne 7 ]; do
     echo "[3] List Folder and File"
     echo "[4] Delete"
     echo "[5] Take notes"
-    echo "[6] Set Password the File or Folder"
+    echo "[6] Set Password the File"
     echo "[7] Exit"
 
     read -p "Select an option: " option
