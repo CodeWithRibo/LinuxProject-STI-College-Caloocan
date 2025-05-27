@@ -2,7 +2,8 @@
 
 ## 📘 About
 
-**GMP Linux File Explore** is a Linux-based file management tool developed as a school project at **STI College Caloocan**. This tool helps users manage files and folders efficiently through the command line. It supports essential file operations such as creating, viewing, and deleting files or directories. It also offers useful enhancements like note-taking and secure file encryption with password protection. The project demonstrates practical applications of Linux scripting and system utilities for real-world file management.
+**GMP Linux File Explore** is a Linux-based file management tool developed as a school project at **STI College Caloocan**. This tool helps users manage files and folders efficiently through the command line. It supports essential file operations such as creating, viewing, renaming, moving, and deleting files or directories. It also offers useful enhancements like note-taking, permission setting, and secure file encryption with password protection. The project demonstrates practical applications of Linux scripting and system utilities for real-world file management.
+
 ![image](https://github.com/user-attachments/assets/41d1e338-7803-4099-80c5-db6b7f902d9f)
 
 ## 🚀 Features
